@@ -1,9 +1,11 @@
 import sustitucion
 import transposicion
 import util
+import RSA
 
 def main():
     mensaje = util.pedirmsj("Ingrese el mensaje a operar: ")
+    RSA_cifrar(mensaje)
     
 def test():
     susti_cifrar = "HOLA COMO ESTA"
@@ -38,6 +40,10 @@ def transposicion_descifrar(mensaje, clave):
     descifrado = transposicion.descifrar(mensaje, clave)
     util.printResultado("descifrado",descifrado)
 
+def RSA_cifrar(mensaje):
+    mensaje_bytes = mensaje.encode(encoding='UTF-8',errors='strict')
+    mensaje_cifrado = RSA.cifrar(mensaje_bytes)
+    print(mensaje_cifrado)
 if __name__ == '__main__':
-    #main()
-    test()
+    main()
+    #test()
