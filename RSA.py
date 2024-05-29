@@ -36,15 +36,14 @@ def cifrar(mensaje):
     )
     return mensaje_cifrado
 
-""" # Descifrar el mensaje con la clave privada
-plain_text = private_key.decrypt(
-    cipher_text,
-    padding.OAEP(
-        mgf=padding.MGF1(algorithm=hashes.SHA256()),
-        algorithm=hashes.SHA256(),
-        label=None
+def descifrar(mensaje_cifrado):
+    # Descifrar el mensaje con la clave privada
+    mensaje_descifrado = private_key.decrypt(
+        mensaje_cifrado,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
     )
-)
-
-print("Mensaje cifrado:", cipher_text)
-print("Mensaje descifrado:", plain_text) """
+    return mensaje_descifrado
