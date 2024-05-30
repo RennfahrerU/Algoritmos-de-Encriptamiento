@@ -1,49 +1,99 @@
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.primitives import hashes
+import random
 
-# Generar un par de claves RSA
-private_key = rsa.generate_private_key(
-    public_exponent=65537,
-    key_size=2048,
-    backend=default_backend()
-)
-public_key = private_key.public_key()
+# Función para calcular el máximo común divisor
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
 
-# Serializar las claves en formato PEM
-private_key_pem = private_key.private_bytes(
-    encoding=serialization.Encoding.PEM,
-    format=serialization.PrivateFormat.TraditionalOpenSSL,
-    encryption_algorithm=serialization.NoEncryption()
-)
+# Función para calcular la inversa modular
+def mod_inverse(a, m):
+    m0 = m
+    y = 0
+    x = 1
+    
+    if m == 1:
+        return 0
+    
+    while a > 1:
+        q = a // m
+        t = m
+        
+        m = a % m
+        a = t
+        t = y
+        
+        y = x - q * y
+        x = t
+        
+    if x < 0:
+        x += m0
+        
+    return x
 
-public_key_pem = public_key.public_bytes(
-    encoding=serialization.Encoding.PEM,
-    format=serialization.PublicFormat.SubjectPublicKeyInfo
-)
-def cifrar(mensaje):
-    # Cifrar un mensaje con la clave pública
-        # message = b"Hello, world!"
-    mensaje_cifrado = public_key.encrypt(
-        mensaje,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )
-    )
-    return mensaje_cifrado
+# Generar claves RSA
+def gen_keys(bits):
+    while True:
+        # Generar primos p y q
+        p = gen_prime(bits // 2)
+        q = gen_prime(bits // 2)
+        
+        n = p * q
+        phi = (p - 1) * (q - 1)
+        
+        # Elegir e coprimo con phi
+        e = random.randrange(1, phi)
+        g = gcd(e, phi)
+        while g != 1:
+            e = random.randrange(1, phi)
+            g = gcd(e, phi)
+            
+        # Calcular d
+        d = mod_inverse(e, phi)
+        
+        # Verificar si las claves funcionan
+        test_msg = 12345
+        cipher = encrypt_number(test_msg, e, n)
+        decrypted = decrypt_number(cipher, d, n)
+        if decrypted == test_msg:
+            return (e, d, n)
 
-def descifrar(mensaje_cifrado):
-    # Descifrar el mensaje con la clave privada
-    mensaje_descifrado = private_key.decrypt(
-        mensaje_cifrado,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )
-    )
-    return mensaje_descifrado
+# Cifrar un mensaje
+def encrypt(msg, e, n):
+    cipher = []
+    for char in msg:
+        cipher.append(pow(ord(char), e, n))
+    return cipher
+
+# Descifrar un mensaje
+def decrypt(cipher, d, n):
+    msg = ''
+    for c in cipher:
+        char = pow(c, d, n)
+        if char in range(32, 127):  # Rango de caracteres ASCII válidos
+            msg += chr(char)
+    return msg
+
+# Cifrar un número
+def encrypt_number(num, e, n):
+    return pow(num, e, n)
+
+# Descifrar un número
+def decrypt_number(cipher, d, n):
+    return pow(cipher, d, n)
+
+# Generar un número primo
+def gen_prime(bits):
+    while True:
+        p = random.randrange(2 ** (bits - 1), 2 ** bits)
+        if is_prime(p):
+            return p
+
+# Verificar si un número es primo
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
