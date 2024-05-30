@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrado y Descifrado</title>
+</head>
+<body>
+    <h1>Cifrado y Descifrado de Mensajes</h1>
+    <form method="POST">
+        <label for="mensaje">Mensaje:</label>
+        <input type="text" id="mensaje" name="mensaje" required><br><br>
+
+        <label for="operacion">Operación:</label>
+        <select id="operacion" name="operacion">
+            <option value="cifrar">Cifrar</option>
+            <option value="descifrar">Descifrar</option>
+        </select><br><br>
+
+        <label for="tipo_cifrado">Tipo de Cifrado:</label>
+        <select id="tipo_cifrado" name="tipo_cifrado">
+            <option value="sustitucion">Sustitución</option>
+            <option value="transposicion">Transposición</option>
+            <option value="RSA">RSA</option>
+        </select><br><br>
+
+        <button type="submit">Proceder</button>
+    </form>
+
+    {% if resultado %}
+    <h2>Resultado:</h2>
+    <p>{{ resultado }}</p>
+    {% endif %}
+</body>
+</html>
