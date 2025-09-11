@@ -58,7 +58,7 @@ python app.py
 
 Abre tu navegador en [http://localhost:5000](http://localhost:5000) y disfruta de la interfaz gráfica. Es súper fácil: elige el algoritmo, escribe tu mensaje, selecciona cifrar o descifrar, ¡y listo!
 
-### 🖥️ Interfaz de Consola (Old School)
+### 🖥️ Interfaz de Consola
 Si te gusta la terminal, ejecuta:
 ```bash
 pipenv run python main.py
