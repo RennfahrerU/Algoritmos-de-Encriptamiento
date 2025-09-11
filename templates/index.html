@@ -1,35 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cifrado y Descifrado</title>
+    <title>🔐 Algoritmos de Encriptamiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    <h1>Cifrado y Descifrado de Mensajes</h1>
-    <form method="POST">
-        <label for="mensaje">Mensaje:</label>
-        <input type="text" id="mensaje" name="mensaje" required><br><br>
+    <div class="container">
+        <h1>🔐 Algoritmos de Encriptamiento</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instrucciones de uso:</h3>
+            <ul>
+                <li><strong>Sustitución y Transposición:</strong> Ingresa texto normal para cifrar o el texto cifrado para descifrar.</li>
+                <li><strong>RSA:</strong> Para cifrar, ingresa texto normal. Para descifrar, primero cifra un mensaje para generar las claves, luego copia y pega la lista de números exacta que aparece en el resultado.</li>
+            </ul>
+        </div>
+        
+        <div class="form-container">
+            <form method="POST">
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" rows="3" placeholder="Escribe tu mensaje aquí..." required></textarea>
 
-        <label for="operacion">Operación:</label>
-        <select id="operacion" name="operacion">
-            <option value="cifrar">Cifrar</option>
-            <option value="descifrar">Descifrar</option>
-        </select><br><br>
+                <label for="operacion">Operación:</label>
+                <select id="operacion" name="operacion">
+                    <option value="cifrar">🔒 Cifrar</option>
+                    <option value="descifrar">🔓 Descifrar</option>
+                </select>
 
-        <label for="tipo_cifrado">Tipo de Cifrado:</label>
-        <select id="tipo_cifrado" name="tipo_cifrado">
-            <option value="sustitucion">Sustitución</option>
-            <option value="transposicion">Transposición</option>
-            <option value="RSA">RSA</option>
-        </select><br><br>
+                <label for="tipo_cifrado">Tipo de Cifrado:</label>
+                <select id="tipo_cifrado" name="tipo_cifrado">
+                    <option value="sustitucion">🔄 Sustitución (César)</option>
+                    <option value="transposicion">🔀 Transposición</option>
+                    <option value="RSA">🔑 RSA</option>
+                </select>
 
-        <button type="submit">Proceder</button>
-    </form>
+                <button type="submit" class="submit-btn">Procesar ✨</button>
+            </form>
+        </div>
 
-    {% if resultado %}
-    <h2>Resultado:</h2>
-    <p>{{ resultado }}</p>
-    {% endif %}
+        <div class="result-container">
+            {% if resultado %}
+            <div class="result-box">
+                <h2>🎆 Resultado:</h2>
+                <div class="result-text">{{ resultado }}</div>
+            </div>
+            {% endif %}
+            
+            {% if mensaje_info %}
+            <div class="info-box">
+                <h3>📝 Información Adicional:</h3>
+                <div class="info-text">{{ mensaje_info }}</div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="footer">
+            <p>💻 Desarrollado por Yilver | 🔐 Algoritmos de Encriptación
+        </div>
+    </div>
 </body>
 </html>
