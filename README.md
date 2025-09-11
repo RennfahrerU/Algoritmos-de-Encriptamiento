@@ -1,3 +1,10 @@
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)
+[![Flask](https://img.shields.io/badge/Flask-000?logo=flask&logoColor=fff)](#)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+[![GitHub license](https://badgen.net/github/license/Naereen/Strapdown.js)](https://github.com/RennfahrerU/Algoritmos-de-Encriptamiento/blob/main/LICENSE)
+
+---
+
 # 🔐 Algoritmos de Encriptamiento
 
 ¡Bienvenido! Este proyecto es una implementación sencilla y educativa de tres algoritmos de encriptación clásicos en Python, con una interfaz web hecha con Flask: **Cifrado César**, **Transposición** y **RSA**. Perfecto para aprender sobre criptografía o experimentar con estos algoritmos.
@@ -115,6 +122,7 @@ Descifrado RSA: HOLA MUNDO
   descifrado = RSA_descifrar(cifrado, d, n)
   ```
 
+![Captura de pantalla de la app](/screenshot.jpeg)
 ## 📂 Estructura del proyecto
 
 ```
